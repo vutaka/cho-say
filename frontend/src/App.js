@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter, Route, Link } from 'react-router-dom'
 import { Layout, Menu, Icon,} from 'antd';
 import EventRegisterPage from './components/EventRegisterPage'
