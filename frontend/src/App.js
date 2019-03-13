@@ -18,11 +18,12 @@ const App = () => (
      <Sider width={200} style={{ background: '#fff' }}>
        <Menu
          mode="inline"
+         defaultSelectedKeys={[window.location.pathname]}
          defaultOpenKeys={['sub1']}
          style={{ height: '100%', borderRight: 0 }}>
          <SubMenu key="sub1" title={<span><Icon type="exclamation-circle" />イベント</span>}>
-           <Menu.Item key="1"><Link to='/eventList'>一覧</Link></Menu.Item>
-           <Menu.Item key="2"><Link to='/eventRegister'>登録</Link></Menu.Item>
+           <Menu.Item key="/eventList"><Link to='/eventList'>一覧</Link></Menu.Item>
+           <Menu.Item key="/eventRegister"><Link to='/eventRegister'>登録</Link></Menu.Item>
          </SubMenu>
        </Menu>
      </Sider>
