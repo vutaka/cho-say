@@ -1,6 +1,6 @@
 SELECT
   e.event_id,
-  candidate_datee.title,
+  e.title,
   e.description,
   e_date.candidate_date
 FROM

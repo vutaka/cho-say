@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Link } from 'react-router-dom'
 import { Layout, Menu, Icon,} from 'antd';
 import EventRegisterPage from './components/EventRegisterPage'
-import EventListPage from './components/EventListPage'
+import EventHomePage from './components/EventHomePage'
 import './App.css';
 
 const { SubMenu } = Menu;
@@ -22,7 +22,7 @@ const App = () => (
          defaultOpenKeys={['sub1']}
          style={{ height: '100%', borderRight: 0 }}>
          <SubMenu key="sub1" title={<span><Icon type="exclamation-circle" />イベント</span>}>
-           <Menu.Item key="/eventList"><Link to='/eventList'>一覧</Link></Menu.Item>
+           <Menu.Item key="/event"><Link to='/event'>一覧</Link></Menu.Item>
            <Menu.Item key="/eventRegister"><Link to='/eventRegister'>登録</Link></Menu.Item>
          </SubMenu>
        </Menu>
@@ -32,7 +32,8 @@ const App = () => (
          background: '#fff', padding: 24, margin: 0, minHeight: 280,
        }}>
         <Route exact path='/' component={Home} />
-        <Route path='/eventList' component={EventListPage} />
+        {/* eventは子ページをもつため完全一致にしない */}
+        <Route path='/event' component={EventHomePage} />
         <Route path='/eventRegister' component={EventRegisterPage} />
      
        </Content>
