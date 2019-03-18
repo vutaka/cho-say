@@ -38,10 +38,8 @@ class EventDetailPage extends Component {
             dataIndex: participantId
           })
         }
-        console.log(candidateAnswers);
         for (const candidateId in candidateAnswers) {
             tableDef.dataSource.push(candidateAnswers[candidateId]);
-            
           }
         this.setState(tableDef);
       });
