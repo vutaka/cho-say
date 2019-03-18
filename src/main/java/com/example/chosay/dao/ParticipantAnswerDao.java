@@ -9,14 +9,12 @@ import org.seasar.doma.boot.ConfigAutowireable;
 
 @ConfigAutowireable
 @Dao
-public interface EventDao {
+public interface ParticipantAnswerDao {
 
   @Select
-  List<Event> selectAll();
-
-  @Select
-  List<EventWithCandidate> selectById(Integer eventId);
+  public List<ParticipantAnswerWithName> selectByEventId(Integer eventId);
 
   @Insert
-  int insert(Event event);
+  public int insert(ParticipantAnswer participantAnswer);
+
 }

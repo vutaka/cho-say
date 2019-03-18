@@ -4,7 +4,8 @@ import java.util.List;
 
 import com.example.chosay.dao.Event;
 import com.example.chosay.dao.EventDao;
-import com.example.chosay.dao.EventWithCandidateDate;
+import com.example.chosay.dao.EventWithCandidate;
+import com.example.chosay.dao.ParticipantAnswerDao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,9 @@ public class EventController {
 
   @Autowired
   EventDao eventDao;
+
+  @Autowired
+  ParticipantAnswerDao answerDao;
   
   @GetMapping("/event")
   @Transactional
@@ -26,7 +30,10 @@ public class EventController {
 
   @GetMapping("/event/{id}")
   @Transactional
-  List<EventWithCandidateDate> find(@PathVariable("id") Integer eventId) {
-    return eventDao.selectById(eventId);
+  EventViewDto find(@PathVariable("id") Integer eventId) {
+    EventViewDto viewDto = new EventViewDto();
+    viewDto.setCandidates(eventDao.selectById(eventId));
+    viewDto.setAnswerList(answerDao.selectByEventId(eventId));
+    return viewDto;
   }
 }
