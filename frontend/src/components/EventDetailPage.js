@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Table } from 'antd';
+import CodeConstants from '../code/codeValue';
 
 
 
@@ -12,35 +13,18 @@ class EventDetailPage extends Component {
       .then(json => {
         const tableDef = {
           columns : [{
-            title: '候補日',
-            dataIndex: 'candidate',
-            key: 'candidate'
+            title: '参加者',
+            dataIndex: 'participantName'
           }],
-          dataSource: []
+          dataSource: json.answerList
         };
-        // 候補日の辞書を用意する
-        const candidateAnswers = {};
         json.candidates.forEach(candidate => {
-          candidateAnswers[candidate.candidateId] = {candidate: candidate.candidate ,candidateId: candidate.candidateId};
-        });
-        // 参加者の辞書を用意する。
-        const participantAnswers={};
-        json.answerList.forEach(answer => {
-          if(!participantAnswers[answer.participantId]) 
-            participantAnswers[answer.participantId] = {name: answer.participantName, comment: answer.comment};
-          // 参加者の回答は候補日に格納する。
-          candidateAnswers[answer.candidateId][answer.participantId] = answer.answer;
-        });
-
-        for (const participantId in participantAnswers) {
           tableDef.columns.push({
-            title: participantAnswers[participantId].name,
-            dataIndex: participantId
-          })
-        }
-        for (const candidateId in candidateAnswers) {
-            tableDef.dataSource.push(candidateAnswers[candidateId]);
-          }
+              title: candidate.candidate,
+              dataIndex: 'candidateAnswer.' + candidate.candidateId,
+              render: text => (<React.Fragment>{CodeConstants.answerCode[text]}</React.Fragment>)
+            });
+        })
         this.setState(tableDef);
       });
   }
@@ -52,8 +36,8 @@ class EventDetailPage extends Component {
   render() {
     return (
       <React.Fragment>
-        <h2>イベント詳細{this.props.match.params.eventId}</h2>
-        <Table dataSource={this.state.dataSource} columns={this.state.columns} rowKey={record => record.candidateId}/>
+        <h2>イベント詳細</h2>
+        <Table dataSource={this.state.dataSource} columns={this.state.columns} rowKey={record => record.participantId} pagination={false} />
       </React.Fragment>
     );
   }

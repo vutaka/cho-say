@@ -1,8 +1,8 @@
 SELECT
-  c.candidate_id,
-  c.candidate,
   p.participant_id,
   p.participant_name,
+  c.candidate_id,
+  c.candidate,
   pa.answer,
   p.comment
 FROM
@@ -16,4 +16,4 @@ FROM
 WHERE
   e.event_id = /* eventId */'1'
 ORDER BY
-  c.candidate
+  p.participant_id

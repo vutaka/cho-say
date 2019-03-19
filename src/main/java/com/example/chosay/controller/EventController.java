@@ -1,12 +1,14 @@
 package com.example.chosay.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.chosay.dao.Event;
 import com.example.chosay.dao.EventDao;
-import com.example.chosay.dao.EventWithCandidate;
 import com.example.chosay.dao.ParticipantAnswerDao;
+import com.example.chosay.dao.ParticipantAnswerWithName;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +23,7 @@ public class EventController {
 
   @Autowired
   ParticipantAnswerDao answerDao;
-  
+
   @GetMapping("/event")
   @Transactional
   List<Event> findAll() {
@@ -33,7 +35,17 @@ public class EventController {
   EventViewDto find(@PathVariable("id") Integer eventId) {
     EventViewDto viewDto = new EventViewDto();
     viewDto.setCandidates(eventDao.selectById(eventId));
-    viewDto.setAnswerList(answerDao.selectByEventId(eventId));
+    List<AnswerDto> answerList = new ArrayList<>();
+    AnswerDto aDto = new AnswerDto();
+    for (ParticipantAnswerWithName row : answerDao.selectByEventId(eventId)) {
+      if (!row.getParticipantId().equals(aDto.getParticipantId())) {
+        aDto = new AnswerDto();
+        answerList.add(aDto);
+        BeanUtils.copyProperties(row, aDto);
+      }
+      aDto.getCandidateAnswer().put(row.getCandidateId(), row.getAnswer());
+    }
+    viewDto.setAnswerList(answerList);
     return viewDto;
   }
 }

@@ -3,12 +3,11 @@ package com.example.chosay.controller;
 import java.util.List;
 
 import com.example.chosay.dao.EventWithCandidate;
-import com.example.chosay.dao.ParticipantAnswerWithName;
 
 public class EventViewDto {
   List<EventWithCandidate> candidates;
 
-  List<ParticipantAnswerWithName> answerList;
+  List<AnswerDto> answerList;
 
   public List<EventWithCandidate> getCandidates() {
     return candidates;
@@ -18,11 +17,11 @@ public class EventViewDto {
     this.candidates = candidates;
   }
 
-  public List<ParticipantAnswerWithName> getAnswerList() {
+  public List<AnswerDto> getAnswerList() {
     return answerList;
   }
 
-  public void setAnswerList(List<ParticipantAnswerWithName> answerList) {
+  public void setAnswerList(List<AnswerDto> answerList) {
     this.answerList = answerList;
   }
 }
